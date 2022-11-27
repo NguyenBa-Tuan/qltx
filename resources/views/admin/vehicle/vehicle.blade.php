@@ -103,11 +103,12 @@
                                     <label class="col">
                                         Lựa chọn hãng xe
                                         <select class="form-control form-control-lg" name="brand_id">
+                                            
                                             @foreach ($data_brand as $key => $brand)
                                                 @if ($value->brand_id == $brand->brand_id)
-                                                    <option value="{{$brand->brand_id}}" selected>{{ $brand->name }}</option>
+                                                    <option value="{{$brand->id}}" selected>{{ $brand->name }}</option>
                                                 @else
-                                                    <option value="{{$brand->brand_id}}">{{ $brand->name }}</option>
+                                                    <option value="{{$brand->id}}">{{ $brand->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -183,7 +184,7 @@
                     Lựa chọn hãng xe
                     <select class="form-control form-control-lg" name="brand_id">
                         @foreach ($data_brand as $key => $value)
-                            <option value="{{$value->brand_id}}">{{ $value->name }}</option>
+                            <option value="{{$value->id}}">{{ $value->name }}</option>
                         @endforeach
                     </select>
                 </label>
