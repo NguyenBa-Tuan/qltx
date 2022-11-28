@@ -14,7 +14,7 @@ class BrandCRUDController extends Controller
      */
     public function index()
     {
-        $data = Brand::orderBy('brand_id', 'desc')->paginate(4);
+        $data = Brand::orderBy('id', 'desc')->paginate(4);
         // dd($data);
         return view('admin.brand.brand', compact('data'));
     }
@@ -88,7 +88,7 @@ class BrandCRUDController extends Controller
             'name.unique' => 'Hãng xe đã tồn tại',
         ]);
 
-        $brand = Brand::where('brand_id',$id);
+        $brand = Brand::where('id',$id);
         $brand->update(['name' => $request->name]);
         
         return redirect()->back();
@@ -102,7 +102,7 @@ class BrandCRUDController extends Controller
      */
     public function destroy($id)
     {
-        Brand::where('brand_id', $id)->delete();
+        Brand::where('id', $id)->delete();
         return redirect()->back();
     }
 
