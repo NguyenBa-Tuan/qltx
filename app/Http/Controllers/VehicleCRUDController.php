@@ -16,11 +16,11 @@ class VehicleCRUDController extends Controller
      */
     public function index()
     {
+        
         // $data = Vehicle::orderBy('id', 'desc')->paginate(4);
-        $data = Vehicle::join('brands', 'vehicles.brand_id', '=' , 'brands.brand_id')
-        ->select('vehicles.*','brands.name as brand_name')
-        ->paginate(4);
-
+        $data = Vehicle::join('brands', 'vehicles.brand_id', '=', 'brands.id')
+            ->select('vehicles.*', 'brands.name as brand_name')
+            ->paginate(4);
         $data_brand = Brand::all();
         return view('admin.vehicle.vehicle', compact(['data', 'data_brand']));
     }
@@ -54,7 +54,7 @@ class VehicleCRUDController extends Controller
             (int)$request->get('brand_id') => 'unique:brands,brand_id',
             'overview' => 'required',
             'image' => 'required',
-        ],[
+        ], [
             'name.required' => 'Vui lòng nhập tên xe',
             'price_day.required' => 'Vui lòng nhập giá xe',
             'model_year.required' => 'Vui lòng nhập năm sản xuất',
@@ -78,13 +78,13 @@ class VehicleCRUDController extends Controller
         $vehicle->brand_id = (int)$date['brand_id'];
         $vehicle->overview = $date['overview'];
 
-        if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('public/Image'), $filename);
-            $vehicle['image']= $filename;
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('public/Image'), $filename);
+            $vehicle['image'] = $filename;
         }
-
+        
         $vehicle->save();
 
         return redirect()->back();

@@ -1,0 +1,91 @@
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+.header-top {
+    padding: 20px 0;
+}
+
+a.logo {
+    margin-right: 15px;
+}
+
+a.logo img {
+    width : 50px;
+    height: 50px;
+}
+
+.site-menu li {
+    display: inline-block;
+}
+
+.site-menu ul {
+    margin: 0;
+}
+
+.site-header a {
+    text-decoration: none;
+}
+
+.header-banner>img {
+    max-width: 100%;
+}
+
+.list-car .item {
+    box-shadow: 5px 10px 8px #888888
+}
+
+.list-car .item .img {
+    overflow: hidden;
+}
+
+.list-car .item img {
+    max-width         : 100%;
+    transition        : all 0.3s ease-in-out 0s;
+    -moz-transition   : all 0.3s ease-in-out 0s;
+    -o-transition     : all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -ms-transition    : all 0.3s ease-in-out 0s;
+}
+
+.list-car .item img:hover {
+    transform: scale(1.1);
+}
+
+.list-car .item .info a {
+    text-decoration: none;
+}
+
+.logo-footer img {
+    width    : 100px;
+    max-width: 100%;
+}
+
+.site-footer nav li {
+    list-style: none;
+}
+
+.site-footer nav a {
+    text-decoration: none;
+    font-size      : 20px;
+    color          : #fff;
+}
+
+.site-footer {
+    background-color: #004998;
+    color           : #fff
+}
+
+.deil-tail .content .img {
+    width: calc(50% - 15px);
+}
+
+.deil-tail .content .intro {
+    width: calc(50% - 15px);
+}
+
+.deil-tail .content .intro li {
+    list-style: none;
+}
