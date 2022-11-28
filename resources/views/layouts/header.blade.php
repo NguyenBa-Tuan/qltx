@@ -18,8 +18,16 @@
                 </nav>
             </div>
             <div class="right d-flex align-items-center">
-                <a href="{{route('login')}}" class="login">Dang nhap</a>
+                @if(Auth::check())
+                <a class="ms-4" href="javascript:void(0)" style="color:red">{{Auth::user()->name}}</a>
+                <form action="{{route('logout')}}" method="POST">
+                    @csrf
+                    <button type="submit" class="register ms-4">Logout</button>
+                </form>
+                @else
+                <a href="{{route('showLoginForm')}}" class="login">Dang nhap</a>
                 <a href="{{route('register')}}" class="register ms-4">Dang ky</a>
+                @endif
             </div>
         </div>
     </div>
