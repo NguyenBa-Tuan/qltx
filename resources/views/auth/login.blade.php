@@ -1,73 +1,74 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QLTX</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <style>
+        .form_auth {
+            border: 1px solid #ccc;
+            width: 500px;
+            padding: 30px;
+            margin: 50px auto;
+        }
+    </style>
+</head>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+<body>
+    <div id="wrapper">
+        <header class="site-header">
+            <div class="container">
+                <div class="header-top d-flex justify-content-between align-items-center">
+                    <div class="left d-flex align-items-center">
+                        <a href="#" class="logo">
+                            <img src="{{asset('/images/logo.png')}}" alt="" srcset="">
+                        </a>
+                        <form action="#" class="search">
+                            <input type="text" placeholder="Tim kiem" class="p-1">
+                            <button type="submit" class="btn btn-primary ms-2">Tìm kiếm</button>
+                        </form>
+                        <nav class="site-menu">
+                            <ul>
+                                <li class=""><a href="#">Trang chu</a></li>
+                                <li class="ms-2"><a href="#">Thue xe</a></li>
+                                <li class="ms-2"><a href="#">Lich su thue xe</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="right d-flex align-items-center">
+                        <a href="{{route('showLoginForm')}}" class="login">Dang nhap</a>
+                        <a href="{{route('register')}}" class="register ms-4">Dang ky</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </header>
+        @if(Session::has('error'))
+        <p style="color:red">{{Session::get('error')}}</p>
+        @endif
+        <main class="site-main">
+            <div class="form_auth">
+                <form action="{{route('login')}}" method="POST">
+                    @csrf
+                    <div>
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </main>
+
+        @include('layouts.footer')
     </div>
-</div>
-@endsection
+</body>
+
+</html>

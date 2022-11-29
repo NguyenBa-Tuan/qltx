@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BrandCRUDController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\VehicleCRUDController;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -17,14 +19,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('showLoginForm');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('showRegisterForm');
+Route::post('/register', [LoginController::class, 'register'])->name('register');
+
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/{id}', [IndexController::class, 'productDetail'])->name('index.product-detail');
 Route::post('/{id}', [IndexController::class, 'booking'])->name('index.booking');
-
-Auth::routes();
-Route::get('login', [UserLogin::class, 'showLoginForm'])->name('login');
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('adminAuth')->prefix('admin')->group(function () {
     Route::get('/', [BrandCRUDController::class, 'index'])->name('admin');
@@ -33,11 +36,3 @@ Route::middleware('adminAuth')->prefix('admin')->group(function () {
     // Route::resource('users', AdminController::class);
     // Route::resource('courses', CourseController::class);
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
