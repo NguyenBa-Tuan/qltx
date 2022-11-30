@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+@include('layouts.banner')
 <div class="py-5 deil-tail">
     <div class="container">
         @if (Session::has('success'))

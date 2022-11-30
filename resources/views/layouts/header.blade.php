@@ -2,7 +2,7 @@
     <div class="container">
         <div class="header-top d-flex justify-content-between align-items-center">
             <div class="left d-flex align-items-center">
-                <a href="#" class="logo">
+                <a href="/" class="logo">
                     <img src="{{asset('/images/logo.png')}}" alt="" srcset="">
                 </a>
                 <form action="#" class="search">
@@ -11,9 +11,14 @@
                 </form>
                 <nav class="site-menu">
                     <ul>
-                        <li class=""><a href="#">Trang chu</a></li>
-                        <li class="ms-2"><a href="#">Thue xe</a></li>
-                        <li class="ms-2"><a href="#">Lich su thue xe</a></li>
+                        <!-- <li class=""><a href="#">Trang chu</a></li> -->
+                        @if(Auth::check())
+                        @if(Auth::user()->role == 0)
+                        <li class="ms-2"><a href="{{route('brand.index')}}">Dashboard</a></li>
+                        @else(Auth::user()->role != 0)
+                        <li class="ms-2"><a href="{{route('bookingHistory')}}">Lich su thue xe</a></li>
+                        @endif
+                        @endif
                     </ul>
                 </nav>
             </div>
@@ -31,5 +36,4 @@
             </div>
         </div>
     </div>
-    @include('layouts.banner')
 </header>

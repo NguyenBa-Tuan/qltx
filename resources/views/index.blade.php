@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+@include('layouts.banner')
 <div class="list-car py-5">
     <div class="container">
         <h2 class="title text-center mb-4">

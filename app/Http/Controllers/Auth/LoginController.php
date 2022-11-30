@@ -12,7 +12,8 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        if (!Auth::check()) return view('auth.login');
+        else return redirect()->back();
     }
 
     public function login(Request $request)
@@ -30,12 +31,13 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return view('auth.login');
+        return redirect()->route('index');
     }
 
     public function showRegisterForm()
     {
-        return view('auth.register');
+        if (!Auth::check()) return view('auth.register');
+        else return redirect()->back();
     }
 
     public function register(Request $request)
