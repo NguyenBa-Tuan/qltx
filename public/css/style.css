@@ -1,6 +1,6 @@
 * {
-    margin    : 0;
-    padding   : 0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -13,7 +13,7 @@ a.logo {
 }
 
 a.logo img {
-    width : 50px;
+    width: 50px;
     height: 50px;
 }
 
@@ -42,12 +42,12 @@ a.logo img {
 }
 
 .list-car .item img {
-    max-width         : 100%;
-    transition        : all 0.3s ease-in-out 0s;
-    -moz-transition   : all 0.3s ease-in-out 0s;
-    -o-transition     : all 0.3s ease-in-out 0s;
+    max-width: 100%;
+    transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
     -webkit-transition: all 0.3s ease-in-out 0s;
-    -ms-transition    : all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s;
 }
 
 .list-car .item img:hover {
@@ -59,7 +59,7 @@ a.logo img {
 }
 
 .logo-footer img {
-    width    : 100px;
+    width: 100px;
     max-width: 100%;
 }
 
@@ -69,13 +69,13 @@ a.logo img {
 
 .site-footer nav a {
     text-decoration: none;
-    font-size      : 20px;
-    color          : #fff;
+    font-size: 20px;
+    color: #fff;
 }
 
 .site-footer {
     background-color: #004998;
-    color           : #fff
+    color: #fff
 }
 
 .deil-tail .content .img {
@@ -88,4 +88,8 @@ a.logo img {
 
 .deil-tail .content .intro li {
     list-style: none;
+}
+
+.site-main {
+    min-height: 653px;
 }
