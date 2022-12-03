@@ -27,6 +27,9 @@
                 @case(2)
                 <td>Bị từ chối</td>
                 @break
+                @case(3)
+                <td>Đã trả xe</td>
+                @break
                 @default
                 <td>Error</td>
                 @endswitch
