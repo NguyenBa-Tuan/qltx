@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BrandCRUDController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleCRUDController;
 
@@ -28,6 +29,8 @@ Route::post('/register', [LoginController::class, 'register'])->name('register')
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/{id}', [IndexController::class, 'productDetail'])->name('index.product-detail');
 Route::post('/{id}', [IndexController::class, 'booking'])->name('index.booking');
+
+Route::get('/search/{search}', [SearchController::class, 'index'])->name('search.vehicles');
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [BrandCRUDController::class, 'index'])->name('admin');
