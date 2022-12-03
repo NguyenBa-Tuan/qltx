@@ -467,7 +467,7 @@
                 <li><a href="{{ route('brand.index')}}">Hãng xe</a></li>
                 <li><a href="{{ route('vehicle.index')}}">Dòng xe</a></li>
                 <li><a href="{{ route('admin.bookingHistory')}}">Lịch sử thuê xe</a></li>
-                <li><a href="{{ route('admin.requestRentForm')}}">Yêu cầu thuê xe</li>
+                <li><a href="{{ route('admin.requestRentForm')}}">Yêu cầu thuê xe</a></li>
             </ul>
         </div>
         @show

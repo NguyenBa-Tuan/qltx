@@ -18,6 +18,7 @@
             <th scope="col">Ngày bắt đầu thuê</th>
             <th scope="col">Ngày trả xe</th>
             <th scope="col">Status</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -38,12 +39,25 @@
             @case(1)
             <td>Đang thuê</td>
             @break
-            @case(1)
-            <td>Bị từ chối</td>
+            @case(2)
+            <td>Từ chối</td>
+            @break
+            @case(3)
+            <td>Đã trả xe</td>
             @break
             @default
             <td>Error</td>
             @endswitch
+            <td>
+                <form action="{{route('admin.requestRent', $value->id)}}" method="POST" id="carform">
+                    @csrf
+                    <select name="status">
+                        <option value="1">Đang thuê</option>
+                        <option value="3">Đã trả xe</option>
+                    </select>
+                    <button type="submit">Submit</button>
+                </form>
+            </td>
         </tr>
         @endforeach
     </tbody>
