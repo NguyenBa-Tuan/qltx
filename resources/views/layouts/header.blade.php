@@ -5,8 +5,8 @@
                 <a href="/" class="logo">
                     <img src="{{asset('/images/logo.png')}}" alt="" srcset="">
                 </a>
-                <form action="#" class="search">
-                    <input type="text" placeholder="Tim kiem" class="p-1">
+                <form action="{{route('search.vehicles', 'search')}}" method="GET">
+                    <input type="text" placeholder="Tim kiem" class="p-1" name="search">
                     <button type="submit" class="btn btn-primary ms-2">Tìm kiếm</button>
                 </form>
                 <nav class="site-menu">
