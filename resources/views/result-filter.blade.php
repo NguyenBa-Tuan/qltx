@@ -31,7 +31,7 @@
             <p style="text-align: center">No data</p>
             @endforelse
         </div>
-        {{ $vehicles->links() }}
+        {{-- $vehicles->links() --}}
     </div>
 </div>
 @endsection

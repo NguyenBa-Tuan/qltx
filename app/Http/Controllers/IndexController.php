@@ -10,10 +10,25 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::with('brand')->paginate(3);
-        return view('index', compact('vehicles'));
+        $list_car = Vehicle::all();
+        if (!$request->input()) {
+            $vehicles = Vehicle::with('brand')->paginate(3);
+            return view('index', compact('vehicles', 'list_car'));
+        } else {
+            $price_from = $request->price_from ?? 0;
+            $price_to = $request->price_to ?? Vehicle::max('price_day');
+
+            $vehicles = Vehicle::when([$price_from, $price_to], function ($query) use ($price_from, $price_to) {
+                return $query->whereBetween('price_day', [$price_from, $price_to]);
+            })->when($request->name, function ($query) use ($request) {
+                return $query->where('name', 'LIKE',  "%{$request->name}%");
+            }, function ($query) {
+                return $query;
+            })->paginate(3);
+            return view('index', compact('vehicles', 'list_car'));
+        }
     }
 
     public function productDetail($id)
