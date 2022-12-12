@@ -41,6 +41,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     // Route::resource('courses', CourseController::class);
     Route::get('/request', [AdminController::class, 'requestRentForm'])->name('admin.requestRentForm');
     Route::post('/request/{id}', [AdminController::class, 'requestRent'])->name('admin.requestRent');
+    Route::get('/revenue-month', [AdminController::class, 'revenueMonth'])->name('admin.revenueMonth');
 });
 
 Route::middleware('user')->prefix('user')->group(function () {

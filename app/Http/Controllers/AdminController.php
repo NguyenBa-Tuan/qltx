@@ -46,4 +46,31 @@ class AdminController extends Controller
         $update->save();
         return redirect()->back()->with('success', 'Success');
     }
+
+    public function revenueMonth()
+    {
+        $data = DB::table('bookings')
+            ->join('users', 'users.id', '=', 'bookings.user_id')
+            ->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
+            ->select('bookings.*', 'users.name as user_name', 'vehicles.name as vehicles_name', 'vehicles.license_plates', DB::raw("DATE_FORMAT(bookings.to_data, '%m-%Y') as month_name"))
+            ->where('status', '=', 3)
+            ->whereYear('bookings.created_at', date('Y'))
+            ->get()
+            ->toArray();
+
+        $attrs = [];
+        foreach ($data as $key => $value) {
+            $attrs[$value->month_name][] = [
+                'from' => $value->from_data,
+                'to' => $value->to_data,
+                'created_at' => $value->created_at,
+                'user_name' => $value->user_name,
+                'license_plates' => $value->license_plates,
+                'vehicles_name' => $value->vehicles_name,
+                'status' => 'Đã trả xe'
+            ];
+        }
+
+        return view('admin.revenue', compact('attrs'));
+    }
 }
