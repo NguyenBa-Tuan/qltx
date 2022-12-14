@@ -37,10 +37,11 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('brand', BrandCRUDController::class);
     Route::resource('vehicle', VehicleCRUDController::class);
     Route::get('/booking-history', [AdminController::class, 'bookingHistory'])->name('admin.bookingHistory');
+    // Route::resource('users', AdminController::class);
+    // Route::resource('courses', CourseController::class);
     Route::get('/request', [AdminController::class, 'requestRentForm'])->name('admin.requestRentForm');
     Route::post('/request/{id}', [AdminController::class, 'requestRent'])->name('admin.requestRent');
     Route::get('/revenue-month', [AdminController::class, 'revenueMonth'])->name('admin.revenueMonth');
-    Route::post('/returnCar/{id}', [AdminController::class, 'returnCar'])->name('admin.returnCar');
 });
 
 Route::middleware('user')->prefix('user')->group(function () {

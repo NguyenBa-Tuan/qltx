@@ -7,8 +7,8 @@
 @endsection
 
 @section('content')
-@forelse($attrs as $key=>$data)
-<table class="table" style="margin-bottom: 50px;" id="id_{{$key}}">
+<table class="table">
+    @forelse($attrs as $key=>$data)
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -19,15 +19,15 @@
             <th scope="col">Ngày bắt đầu thuê</th>
             <th scope="col">Ngày trả xe</th>
             <th scope="col">Status</th>
-            <th scope="col">Giá tiền</th>
         </tr>
     </thead>
     <tbody>
+
         <tr>
             <td>{{$key}}</td>
         </tr>
         @foreach($data as $key=>$value)
-        <tr class="data">
+        <tr>
             <td>{{$key + 1}}</td>
             <td>{{$value['user_name']}}</td>
             <td>{{$value['created_at']}}</td>
@@ -36,32 +36,15 @@
             <td>{{$value['from']}}</td>
             <td>{{$value['to']}}</td>
             <td>{{$value['status']}}</td>
-            <td>{{$value['revenue']}}</td>
         </tr>
         @endforeach
-        <tr>
-            <td class="total"></td>
-        </tr>
         @empty
         <tr>
             <td style="text-align: center">No data</td>
         </tr>
-    </tbody>
-</table>
-@endforelse
-@endsection
-@section('admin-scripts')
-<script>
-    $(document).ready(function() {
 
-        $('table').each(function() {
-            var sum = 0;
-            $(this).find('tbody tr.data').each(function() {
-                var price = $(this).find('td:last-child').text()
-                sum += Number(price);
-            });
-            $(this).find('.total').text('Total: ' + sum + 'đ');
-        });
-    });
-</script>
+    </tbody>
+
+    @endforelse
+</table>
 @endsection

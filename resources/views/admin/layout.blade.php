@@ -507,6 +507,5 @@
         e.preventDefault();
     });
 </script>
-@yield('admin-scripts')
 
 </html>

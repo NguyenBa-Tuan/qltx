@@ -17,6 +17,5 @@ class Booking extends Model
         'status',
         'from_data',
         'to_data',
-        'price',
     ];
 }

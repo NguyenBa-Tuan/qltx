@@ -6,7 +6,6 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -14,6 +13,7 @@ class AdminController extends Controller
     public function index()
     {
         $data = User::all()->where('role', 1);
+        // $courses = Course::all();
         return view('admin.home', compact('data', 'courses'));
     }
 
@@ -52,9 +52,9 @@ class AdminController extends Controller
         $data = DB::table('bookings')
             ->join('users', 'users.id', '=', 'bookings.user_id')
             ->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
-            ->select('bookings.*', 'users.name as user_name', 'vehicles.name as vehicles_name', 'vehicles.license_plates', DB::raw("DATE_FORMAT(bookings.updated_at, '%m-%Y') as month_name"))
+            ->select('bookings.*', 'users.name as user_name', 'vehicles.name as vehicles_name', 'vehicles.license_plates', DB::raw("DATE_FORMAT(bookings.to_data, '%m-%Y') as month_name"))
             ->where('status', '=', 3)
-            ->whereYear('bookings.updated_at', date('Y'))
+            ->whereYear('bookings.created_at', date('Y'))
             ->get()
             ->toArray();
 
@@ -67,23 +67,10 @@ class AdminController extends Controller
                 'user_name' => $value->user_name,
                 'license_plates' => $value->license_plates,
                 'vehicles_name' => $value->vehicles_name,
-                'status' => 'Đã trả xe',
-                'revenue' => $value->price,
+                'status' => 'Đã trả xe'
             ];
         }
-        return view('admin.revenue', compact('attrs'));
-    }
 
-    public function returnCar($id)
-    {
-        DB::table('bookings')->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
-            ->select('bookings.id', 'vehicles.price_day as price')
-            ->where('bookings.id', $id)
-            ->limit(1)
-            ->update([
-                'status' => 3,
-                'updated_at' => Carbon::now(),
-            ]);
-        return redirect()->back()->with('success', 'Trả xe thành công');
+        return view('admin.revenue', compact('attrs'));
     }
 }
