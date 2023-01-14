@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Vehicle;
 use App\Models\Brand;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,6 +41,12 @@ class IndexController extends Controller
     public function booking(Request $request, $id)
     {
         if (Auth::check()) {
+            if ($request->from_data < Carbon::now() || $request->to_data < Carbon::now()) {
+                return redirect()->back()->with('error', 'Thời gian đăng ký thuê xe phải sau ngày hiện tại!');
+            }
+            if ($request->from_data > $request->to_data) {
+                return redirect()->back()->with('error', 'Thời gian trả xe phải sau thời gian thuê xe!');
+            }
             $price = Vehicle::find($id)->price_day;
             Booking::create([
                 'user_id' => Auth::id(),

@@ -41,6 +41,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/request/{id}', [AdminController::class, 'requestRent'])->name('admin.requestRent');
     Route::get('/revenue-month', [AdminController::class, 'revenueMonth'])->name('admin.revenueMonth');
     Route::post('/returnCar/{id}', [AdminController::class, 'returnCar'])->name('admin.returnCar');
+
+    Route::get('revenue-month/filter', [AdminController::class, 'revenueMonthFilterPost'])->name('admin.revenueMonthFilterPost');
 });
 
 Route::middleware('user')->prefix('user')->group(function () {

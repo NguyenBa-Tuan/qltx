@@ -1,12 +1,31 @@
 @extends('admin.layout')
 
 @section('title', 'Revenue')
+<style>
+    .filter_search {
+        display: flex;
+        align-items: baseline;
+    }
 
+    #validate_response {
+        margin-left: 10px;
+        color: red;
+    }
+</style>
 @section('sidebar')
 @parent
 @endsection
 
 @section('content')
+<div class="filter_search">
+    <form action="{{route('admin.revenueMonthFilterPost')}}" method="GET" id="filter_month_table">
+        <input type="text" id="month" name="month" data-field="date" readonly style="border: 1px solid #000;">
+        <div id="dtBox" style="border: 1px solid #000;"></div>
+        <button type="submit">Filter</button>
+    </form>
+
+    <div id="validate_response"></div>
+</div>
 @forelse($attrs as $key=>$data)
 <table class="table" style="margin-bottom: 50px;" id="id_{{$key}}">
     <thead>
@@ -53,7 +72,6 @@
 @section('admin-scripts')
 <script>
     $(document).ready(function() {
-
         $('table').each(function() {
             var sum = 0;
             $(this).find('tbody tr.data').each(function() {
@@ -63,5 +81,17 @@
             $(this).find('.total').text('Total: ' + sum + 'đ');
         });
     });
+</script>
+<script>
+    $('#dtBox').DateTimePicker({
+        dateFormat: "yyyy MM"
+    });
+
+    $('#filter_month_table').submit(function(e) {
+        if ($('#filter_month_table input').val() <= 0) {
+            e.preventDefault();
+            $('#validate_response').text('Input trống!');
+        }
+    })
 </script>
 @endsection
