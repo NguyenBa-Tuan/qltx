@@ -52,9 +52,9 @@ class AdminController extends Controller
         $data = DB::table('bookings')
             ->join('users', 'users.id', '=', 'bookings.user_id')
             ->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
-            ->select('bookings.*', 'users.name as user_name', 'vehicles.name as vehicles_name', 'vehicles.license_plates', DB::raw("DATE_FORMAT(bookings.updated_at, '%m-%Y') as month_name"))
+            ->select('bookings.*', 'users.name as user_name', 'vehicles.name as vehicles_name', 'vehicles.license_plates', DB::raw("DATE_FORMAT(bookings.from_data, '%m-%Y') as month_name"))
             ->where('status', '=', 3)
-            ->whereYear('bookings.updated_at', date('Y'))
+            // ->whereYear('bookings.updated_at', date('Y'))
             ->get()
             ->toArray();
 
@@ -76,14 +76,51 @@ class AdminController extends Controller
 
     public function returnCar($id)
     {
-        DB::table('bookings')->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
-            ->select('bookings.id', 'vehicles.price_day as price')
-            ->where('bookings.id', $id)
-            ->limit(1)
-            ->update([
-                'status' => 3,
-                'updated_at' => Carbon::now(),
-            ]);
+        // DB::table('bookings')->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
+        //     ->select('bookings.id', 'vehicles.price_day as price')
+        //     ->where('bookings.id', $id)
+        //     ->limit(1)
+        //     ->update([
+        //         'status' => 3,
+        //         'updated_at' => Carbon::now(),
+        //     ]);
+        $data = Booking::findOrFail($id);
+        $data->update([
+            'status' => 3,
+            'updated_at' => Carbon::now(),
+        ]);
+
         return redirect()->back()->with('success', 'Trả xe thành công');
+    }
+
+    public function revenueMonthFilterPost(Request $request)
+    {
+        $year = substr($request->month, 0, -3);
+        $month = substr($request->month, -2);
+
+        $data = DB::table('bookings')
+            ->join('users', 'users.id', '=', 'bookings.user_id')
+            ->join('vehicles', 'vehicles.id', '=', 'bookings.vehicles_id')
+            ->select('bookings.*', 'users.name as user_name', 'vehicles.name as vehicles_name', 'vehicles.license_plates', DB::raw("DATE_FORMAT(bookings.from_data, '%m-%Y') as month_name"))
+            ->where('status', '=', 3)
+            ->whereMonth('bookings.from_data', $month)
+            ->whereYear('bookings.from_data', $year)
+            ->get()
+            ->toArray();
+
+        $attrs = [];
+        foreach ($data as $key => $value) {
+            $attrs[$value->month_name][] = [
+                'from' => $value->from_data,
+                'to' => $value->to_data,
+                'created_at' => $value->created_at,
+                'user_name' => $value->user_name,
+                'license_plates' => $value->license_plates,
+                'vehicles_name' => $value->vehicles_name,
+                'status' => 'Đã trả xe',
+                'revenue' => $value->price,
+            ];
+        }
+        return view('admin.revenue', compact('attrs'));
     }
 }
